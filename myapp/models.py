@@ -13,6 +13,7 @@ class Task(models.Model):
     description = models.TextField()
     # Relación con la tabla Project
     project = models.ForeignKey(Project, on_delete=models.CASCADE) 
+    done = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title + ' - ' + self.project.name

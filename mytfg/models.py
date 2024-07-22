@@ -13,7 +13,6 @@ class Speciality(models.Model):
 class Tools(models.Model):
     name = models.CharField(max_length=200)
 
-
 class Creator(models.Model):
     name = models.CharField(max_length=200)
     surname = models.CharField(max_length=200)
