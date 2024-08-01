@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, JsonResponse
 from .models import Project, Task
 from .forms import CreateNewTask, CreateNewProject
+from django.contrib.auth.forms import UserCreationForm # Importamos un formulario de Django ya creado
 # Create your views here.
 
 def index(request):
@@ -9,6 +10,14 @@ def index(request):
     # Podemos pasarle la variable de title que hemos creado como parámetro en el tercer componente, el diccionario
     return render(request, 'index.html', {
         'title': title
+    })
+
+def sig_in(request):
+    return render(request, 'sigin.html')
+
+def sign_up(request):
+    return render(request, 'signup.html', {
+        'form': UserCreationForm
     })
 
 
@@ -80,5 +89,19 @@ def create_project(request):
     else:
         Project.objects.create(name=request.POST['name'])
         return redirect('projects')
+    
+
+def go_project(request, id):
+    project = get_object_or_404(Project, id=id) # Si no existe el proyecto con el id se devuelve un 404
+    #tasks = Task.objects.all()
+    tasks = Task.objects.filter(project_id=id) # Filtramos por id del proyecto
+    return render(request, 'projects/details.html', {
+        'project_name':project.name,
+        'tasks':tasks
+    })
+
+
+
+
 
     
