@@ -13,7 +13,7 @@ def index(request):
     })
 
 def sig_in(request):
-    return render(request, 'sigin.html')
+    return render(request, 'signin.html')
 
 def sign_up(request):
     return render(request, 'signup.html', {
