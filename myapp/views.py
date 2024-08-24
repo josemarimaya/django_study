@@ -1,8 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse
 from .models import Project, Task
 from .forms import CreateNewTask, CreateNewProject
 from django.contrib.auth.forms import UserCreationForm # Importamos un formulario de Django ya creado
+from django.contrib.auth.models import User # Importamos un modelo ya creado de usuarios de Django
 # Create your views here.
 
 def index(request):
@@ -16,6 +17,23 @@ def sig_in(request):
     return render(request, 'signin.html')
 
 def sign_up(request):
+
+    if request.method == 'GET':
+        print('Enviando formulario')
+    else:
+        if request.POST['password1'] == request.POST['password2']:
+            # register user
+            # manejo de errores con try/catch
+            try: 
+                user = User.objects.create_user(username=request.POST['username'],
+                    password=request.POST['password1'])
+                user.save()
+                return HttpResponse('Usuario creado correctamente')
+            except:
+                return HttpResponse('El usuario ya existe')
+        else:
+            return HttpResponse('Las contraseñas no coinciden')
+        
     return render(request, 'signup.html', {
         'form': UserCreationForm
     })
