@@ -6,6 +6,17 @@
 
 <h1> Este es el formulario para iniciar sesión </h1>
 
+<form action="" method="post"> 
+    {% csrf_token %}
+    {{form.as_p}}
+
+    <button>
+        Inicia sesion
+    </button>
+
+</form>
+
+
 <h1> Create un usuario</h1>
 <a href="{%url 'sign_up' %}"> Create un usuario </a>
 

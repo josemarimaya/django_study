@@ -29,9 +29,21 @@
             <li>
                 <a href="{% url 'create_project' %}">Create Project</a>
             </li>
+
+            {% if not user.is_authenticated %}
             <li>
                 <a href="{% url 'sign_in' %}"> Inicia sesión </a>
             </li>
+            {% endif %}
+            
+            
+            {% if user.is_authenticated %}
+
+            <li>
+                <a href="{% url 'sign_out' %}"> Logout </a>
+            </li>
+
+            {% endif %}
         </ul>
     </nav>
 

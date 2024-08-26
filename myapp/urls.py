@@ -14,5 +14,6 @@ urlpatterns = [
     path('create_task/', views.create_task, name='create_task'),
     path('create_project/', views.create_project, name='create_project'),
     path('signin/', views.sig_in, name='sign_in'),
-    path('signup/', views.sign_up, name='sign_up')
+    path('signup/', views.sign_up, name='sign_up'),
+    path('signout/', views.signout, name='sign_out')
 ]
