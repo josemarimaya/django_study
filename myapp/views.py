@@ -1,12 +1,16 @@
+# Imports del proyecto
+from .models import Project, Task
+from .forms import CreateNewProject, CreateTaskForm
+
+# Imports de django
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
-from .models import Project, Task
-from .forms import CreateNewTask, CreateNewProject
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm # Importamos un formulario de Django ya creado
 from django.contrib.auth.models import User # Importamos un modelo ya creado de usuarios de Django
 from django.contrib.auth import login, logout, authenticate # Creación de cookies para los usuarios, Logout de usuario, Autentificación...
 from django.db import IntegrityError # Para trabajar con manejo de errores concretos
-# Create your views here.
+
+
 
 def index(request):
     title = "Welcome to DJANGO"
@@ -113,7 +117,7 @@ def create_task(request):
     if request.method == 'GET':
         # show interface
         return render(request, 'tasks/create_task.html', {
-            'form': CreateNewTask()
+            'form': CreateTaskForm()
         })
     else:
         Task.objects.create(title=request.POST['title'], description=request.POST['description'], 
