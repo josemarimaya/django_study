@@ -6,6 +6,8 @@
 
 <form method="post">
     {% csrf_token %}
+    {{error}}
+    <br/>
     {{form.as_p}}
     <button> Save </button>
 </form>

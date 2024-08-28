@@ -14,7 +14,7 @@ class Task(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
     # Relación con la tabla Project
-    project = models.ForeignKey(Project, on_delete=models.CASCADE) 
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, default=1) # Le indicamos que al crear el nuevo modelo todo lo anterior vaya al proyecto 1 por defecto
     done = models.BooleanField(default=False)
 
     # Añadiendo más campos
