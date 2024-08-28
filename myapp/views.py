@@ -9,6 +9,8 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm # Imp
 from django.contrib.auth.models import User # Importamos un modelo ya creado de usuarios de Django
 from django.contrib.auth import login, logout, authenticate # Creación de cookies para los usuarios, Logout de usuario, Autentificación...
 from django.db import IntegrityError # Para trabajar con manejo de errores concretos
+from django.utils import timezone
+from django.contrib.auth.decorators import login_required # Para proteger las vistas de usuarios no logeados, aunque sepan la ruta no pueden entrar
 
 
 
@@ -111,12 +113,34 @@ def tasks_sigin(request):
         'tasks': tasks
     })
 
+def completed_tasks_list(request):
+    tasks = Task.objects.filter(user = request.user, datecompleted__isnull=False)
+    return render(request, 'tasks/tasks.html', {
+        'tasks': tasks
+    })
+
 def tasks_signout(request):
     tasks = Task.objects.all()
     return render(request, 'tasks/tasks.html', {
         'tasks': tasks
     })
 
+@login_required
+def task_completed(request, task_id):
+    task = get_object_or_404(Task, pk=task_id, user=request.user) # Solo quiero las tareas de dicho usuario
+    if request.method == 'POST':
+        task.datecompleted = timezone.now()
+        task.save()
+        return redirect('tasks_user')
+    
+@login_required
+def task_deleted(request, task_id):
+    task = get_object_or_404(Task, pk=task_id, user=request.user)
+    if request.method == 'POST':
+        task.delete()
+        return redirect('tasks_user')
+
+@login_required
 def task_detail(request, task_id): # Nos traemos el task_id de la urls.py en el que los hemos invocado
     #task = Task.objects.get(pk=task_id)
 
@@ -131,8 +155,35 @@ def task_detail(request, task_id): # Nos traemos el task_id de la urls.py en el 
     
     else:
         try:
+            task = get_object_or_404(Task, pk=task_id, user=request.user)
+            form = CreateTaskForm(request.POST, instance= task)
+            form.save()
+            return redirect('tasks_user')
+        
+        except ValueError:
 
-            task = get_object_or_404(Task, pk=task_id)
+            return render(request, 'tasks/task_detail.html', {
+                'form': CreateTaskForm(),
+                'error': 'Fallo al actualizar'
+            })
+        
+
+# Detalle para cuando el usuario esté loggeado
+@login_required
+def tasks_detail_user(request, task_id):
+
+    if request.method == 'GET':
+
+        task = get_object_or_404(Task, pk=task_id)
+        form = CreateTaskForm(instance=task)
+        return render(request, 'tasks/task_detail.html',{
+            'task': task,
+            'form': form
+        })
+    
+    else:
+        try:
+            task = get_object_or_404(Task, pk=task_id, user=request.user)
             form = CreateTaskForm(request.POST, instance= task)
             form.save()
             return redirect('tasks_user')
@@ -144,9 +195,8 @@ def task_detail(request, task_id): # Nos traemos el task_id de la urls.py en el 
                 'error': 'Fallo al actualizar'
             })
 
-
-
 def task_title(request, title):
+
     task = get_object_or_404(Task, title=title)
     return HttpResponse("Task: %s" % task.title)
 

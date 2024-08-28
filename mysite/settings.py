@@ -120,6 +120,10 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
+# Para redireccionar las rutas que necesitan protección para loggearse
+
+LOGIN_URL = 'sign_in/'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 

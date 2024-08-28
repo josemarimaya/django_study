@@ -15,6 +15,21 @@
     </form>
 
 
+    <form action="{%url 'task_completed' task.id%}" method="post">
+        {%csrf_token%}
+        <button>
+            Complete
+        </button>
+    </form>
+
+    <form action="{%url 'task_delete' task.id%}" method="post">
+        {%csrf_token%}
+        <button>
+            Delete
+        </button>
+    </form>
+
+
 
 
 {% endblock %}
