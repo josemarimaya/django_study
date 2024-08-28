@@ -100,7 +100,7 @@ def projects(request):
         'projects': projects
     })
 
-def tasks(request):
+def tasks_sigin(request):
     #task = Task.objects.get(id=id)
     #tasks = Task.objects.all()
     tasks = Task.objects.filter(user = request.user, # Para filtrar por el usuario iniciado
@@ -111,12 +111,40 @@ def tasks(request):
         'tasks': tasks
     })
 
+def tasks_signout(request):
+    tasks = Task.objects.all()
+    return render(request, 'tasks/tasks.html', {
+        'tasks': tasks
+    })
+
 def task_detail(request, task_id): # Nos traemos el task_id de la urls.py en el que los hemos invocado
     #task = Task.objects.get(pk=task_id)
-    task = get_object_or_404(pk=task_id)
-    return render(request, 'tasks/task_detail.html',{
-        'task': task
-    })
+
+    if request.method == 'GET':
+
+        task = get_object_or_404(Task, pk=task_id)
+        form = CreateTaskForm(instance=task)
+        return render(request, 'tasks/task_detail.html',{
+            'task': task,
+            'form': form
+        })
+    
+    else:
+        try:
+
+            task = get_object_or_404(Task, pk=task_id)
+            form = CreateTaskForm(request.POST, instance= task)
+            form.save()
+            return redirect('tasks_user')
+        
+        except ValueError:
+
+            return render(request, 'tasks/task_detail.html', {
+                'form': CreateTaskForm(),
+                'error': 'Fallo al actualizar'
+            })
+
+
 
 def task_title(request, title):
     task = get_object_or_404(Task, title=title)
@@ -141,7 +169,7 @@ def create_task(request):
             new_task.user = request.user # Como sabemos que cada tarea necesita un usuario por su fk cogemos el del usuario que está con la sesión iniciada
             new_task.save() # Finalmente almacenamos la tarea
             print(form) 
-            return redirect('tasks')
+            return redirect('tasks_user')
         
         except ValueError:
             return render(request, 'tasks/create_task.html', {

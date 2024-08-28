@@ -2,8 +2,19 @@
 
 {% block content %}
 
-<h1> Detalles de la tarea {{task.task_id}}</h1>
-<p> {{task}} </p>
+    <h1> Detalles de la tarea {{task.task_id}}</h1>
+    <p> {{task}} </p>
+
+    <form action="" method="POST">
+        {%csrf_token%}
+        
+        {{form}}
+        <button>
+            Actualizar información
+        </button>
+    </form>
+
+
 
 
 {% endblock %}

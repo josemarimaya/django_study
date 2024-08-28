@@ -7,6 +7,9 @@
 {%for task in tasks%}
 
 <div>
+
+    <h1> <a href="{% url 'task_detail' task.id %}"> {{task.title}}</a> {% if task.done == False%} 🕑 {% else %} ✓  {% endif%} </h1>
+    
     <h1> {{task.title}} {% if task.done == False%} 🕑 {% else %} ✓  {% endif%}</h1>
     {% if task.done == False%}
     <p> Tarea pendiente </p>
