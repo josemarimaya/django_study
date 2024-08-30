@@ -2,29 +2,55 @@
 
 {% block content %}
 
-<h1> Tareas </h1>
+<h1 class="text-center py-3 display-2"> Tareas </h1>
 
-{%for task in tasks%}
+<main class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
 
-<div>
+            {%for task in tasks%}
 
-    <h1> <a href="{% url 'task_detail' task.id %}"> {{task.title}}</a> {% if task.done == False%} 🕑 {% else %} ✓  {% endif%} </h1>
-    
-    <h1> {{task.title}} {% if task.done == False%} 🕑 {% else %} ✓  {% endif%}</h1>
-    {% if task.done == False%}
-    <p> Tarea pendiente </p>
-    {% else %}
-    <p> Tarea realizada </p>
-    {% endif%}
-    <p> {{task.description}}</p>
-    <p> Proyecto al que pertenece: {{task.project.name}}</p>
-    <p> Usuario que realiza la tarea: {{task.user.username}}</p>
-    <button>
-        Done ✓
-    </button>
-    <p> {{task.datecompleted | date:'M j Y:i' }}</p>
-</div>
 
-{% endfor %}
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <h1 class="text-center fw-bold"> <a href="{% url 'task_detail' task.id %}"> {{task.title}}</a> {% if task.done == False%} 🕑 {% else %} ✓  {% endif%} </h1>
+                    
+                    <header class="d-flex justify-content-between">
+                        {% if task.done == False%}
+                        <p> Tarea pendiente </p>
+                        {% else %}
+                        <p> Tarea realizada </p>
+                        {% endif%}
+                        <p> Descripción de la tarea: {{task.description}}</p>
+
+                        
+                    </header>
+
+                    <header class="d-flex justify-content-between">
+                        <p> Usuario que realiza la tarea: {{task.user.username}}</p>
+                        <p> Proyecto al que pertenece: {{task.project.name}}</p>
+                    </header>
+                    
+                    
+                    
+                    <button class="text-center">
+                        Done ✓
+                    </button>
+                    <p> {{task.datecompleted | date:'M j Y:i' }}</p>
+                </li>
+            </ul>
+            
+            {% endfor %}
+        
+
+
+            
+
+        </div>
+    </div>
+
+</main>
+
+
 
 {% endblock %}

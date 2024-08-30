@@ -38,7 +38,7 @@ def sig_in(request):
             })
         else:
             login(request, user_authenticate) # Si el usuario existe le guardo la autentificación
-            return redirect('tasks')
+            return redirect('main')
 
     return render(request, 'signin.html', {
             'form': AuthenticationForm
@@ -57,7 +57,7 @@ def sign_up(request):
                     password=request.POST['password1'])
                 user.save()                
                 login(request, user) # Creación de cookies para el usuario
-                return redirect('tasks')
+                return redirect('main')
             
             except IntegrityError: # Usamos excepciones con errores específicos
                 return render(request, 'signup.html', {

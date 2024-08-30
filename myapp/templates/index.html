@@ -3,9 +3,33 @@
 {% load static %}
 
 {% block content %}
-<h1> {{title}}</h1> 
 
-<img src="{% static 'django-png.png'%}" alt="" width="70">
-<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti in eius cum modi odit cupiditate. Nihil perferendis dolor id tenetur vero veniam provident, tempore harum ab, porro explicabo dolores quae.</p>
+<main class="container py-5">
+    <section class="card card-body">
+
+        <h1 class="display-1 text-center"> {{title}}</h1> 
+    
+        <img src="{% static 'django-png.png'%}" alt="" width="70">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti in eius cum modi odit cupiditate. Nihil perferendis dolor id tenetur vero veniam provident, tempore harum ab, porro explicabo dolores quae.</p>
+    
+        <div class="text-center">
+            <button class="btn btn-secondary">
+                <a href="{%url 'sign_in'%}">sign_up</a>
+                
+            </button>
+
+            <button class="btn btn-dark">
+                <a href="{%url 'sign_up'%}"> Create Account</a>
+            </button>
+        </div>
+
+        <div>
+            
+        </div>
+    </section>
+</main>
+
+
+
 
 {% endblock %}

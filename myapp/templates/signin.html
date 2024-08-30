@@ -8,13 +8,53 @@
 
 <form action="" method="post"> 
     {% csrf_token %}
-    {{form.as_p}}
+
+    <!-- Form generado por django
+     {{form.as_p}}-->
+    
 
     <button>
         Inicia sesion
     </button>
 
 </form>
+
+<main class="container py-3 mb-5">
+    <div class="row">
+        <section class="col-md-4 offset-md-4">
+            <form action="{%url 'main' %}" method="post" class="card card-body text-center">
+                {% csrf_token %}
+                <h1 class="text-center"> Inicia sesión </h1>
+            
+                <!-- form heredado de django
+                     {{form.as_p}}
+                -->
+                
+            
+                <div class="mb-3">
+                    <label for="username" id="username"> Username: </label>
+                    <input type="text" name="username" class="form-control"
+                        placeholder="Escribe tu nombre de usuario">
+                </div>
+            
+                <div class="mb-3">
+                    <label for="password" id="password"> Contraseña: </label>
+                    <input type="password" name="password" class="form-control"
+                        placeholder="Escribe tu contraseña">
+                </div>
+               
+                <button class="btn btn-primary">
+                    Inicia Sesión
+                </button>
+            </form>
+        </section>
+
+    </div>
+</main>
+
+
+
+
 
 
 <h1> Create un usuario</h1>
