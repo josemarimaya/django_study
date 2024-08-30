@@ -2,32 +2,55 @@
 
 {% block content %}
 
-    <h1> Detalles de la tarea {{task.task_id}}</h1>
-    <p> {{task}} </p>
+<main class="container">
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <h1> Detalles de la tarea {{task.task_id}}</h1>
+            <p> {{task}} </p>
 
-    <form action="" method="POST">
-        {%csrf_token%}
+
+            
+
+                <form action="" method="POST">
+                    {%csrf_token%}
+                    {{form}}
+                    <div class="text-center">
+                        <button class="btn btn-info mb-2">
+                            Actualizar información
+                        </button>
+                    </div>
+                    
+                </form>
+
+
+    
+                <div class="d-flex justify-content-between">
+                    
+                    
+                    <form action="{%url 'task_completed' task.id%}" method="post">
+                        {%csrf_token%}
+                        <button class="btn btn-success mb-2">
+                            Complete
+                        </button>
+                    </form>
         
-        {{form}}
-        <button>
-            Actualizar información
-        </button>
-    </form>
+                    <form action="{%url 'task_delete' task.id%}" method="post">
+                        {%csrf_token%}
+                        <button class="btn btn-danger">
+                            Delete
+                        </button>
+                    </form>
+    
 
+                </div>
+                
+            
 
-    <form action="{%url 'task_completed' task.id%}" method="post">
-        {%csrf_token%}
-        <button>
-            Complete
-        </button>
-    </form>
+        </div>
+    </div>
+</main>
 
-    <form action="{%url 'task_delete' task.id%}" method="post">
-        {%csrf_token%}
-        <button>
-            Delete
-        </button>
-    </form>
+    
 
 
 

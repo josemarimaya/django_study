@@ -14,8 +14,13 @@ class CreateNewProject(forms.Form):
     
 
 # Creación de formularios con soporte en Django
-class CreateTaskForm(ModelForm):
+class CreateTaskForm(forms.ModelForm):
 
     class Meta:
         model = Task
         fields = ['title', 'description', 'important']
+        widgets = { # Estilizamos importando el modelo inyectando los estilos de boostrap
+            'title': forms.TextInput(attrs={'class' : 'form-control', 'placeholder': 'Escribe el titulo de la tarea'}),
+            'description': forms.Textarea(attrs={'class' : 'form-control', 'placeholder': 'Agrega una descripción para la tarea realizada'}),
+            'important': forms.CheckboxInput(attrs={'class' : 'form-check-input py-2'})
+        }
